@@ -14,31 +14,6 @@ let availableQuesions = [];
 
 let questions = [];
 
-/*
-async function startGame(){
-    try {
-        const categoryId = this.category.value;
-        const url = 'https://opentdb.com/api.php?amount=10&category=${categoryId}&difficulty=easy&type=multiple';
-        let dataset = await this.fetchData(url);
-        this.toggleVisibility();
-    } catch (error) {
-        alert(error);
-    }
-}
-toggleVisibility();{
-    this.settingsElement.style.visibility = 'hidden';
-    this.quizElement.style.visibility = 'visible';
-}
-
-async function fetchData(url) {
-    const response = await fetch(url);
-    const result = await response.json();
-
-    return result;
-  }
-*/
-//const categoryId = this.category.value; 
-
 fetch(
    // 'https://opentdb.com/api.php?amount=10&category=${categoryId}&difficulty=easy&type=multiple')
     'https://opentdb.com/api.php?amount=10&category=15&difficulty=easy&type=multiple')
