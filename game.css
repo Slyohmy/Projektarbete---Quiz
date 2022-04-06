@@ -12,11 +12,12 @@
 
 .choice-container {
     display: flex;
-    margin-bottom: 0.5rem;
+    margin-bottom: 2rem;
     width: 100%;
     font-size: 1.8rem;
     border: 0.1rem solid rgb(86, 165, 235, 0.25);
-    background-color: #fff;
+    background-color: rgb(223, 191, 189);
+    
   }
 
   .choice-container:hover {
@@ -28,13 +29,14 @@
 
   .choice-prefix {
     padding: 1.5rem 2.5rem;
-    background-color: rgb(235, 187, 109);
+    background-color: rgb(136, 193, 111);
     color: white;
   }
 
   .choice-text {
     padding: 1.5rem;
     width: 100%;
+    color: rgb(66, 65, 65);
   }
 
   .correct {
@@ -70,6 +72,6 @@
 
   #progressBarFull {
     height: 3.4rem;
-    background-color: rgb(235, 187, 109);
+    background-color: rgb(131, 193, 104);
     width: 0%;
   }

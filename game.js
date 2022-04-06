@@ -3,60 +3,58 @@ const choices = Array.from(document.getElementsByClassName('choice-text'));
 const progressText = document.getElementById('progressText');
 const scoreText = document.getElementById('score');
 const progressBarFull = document.getElementById('progressBarFull');
-const mostRecentScore = localStorage.getItem('mostRecentScore');
-this.category = document.querySelector('#category');
+const recentScore = localStorage.getItem('recentScore');
 
 let currentQuestion = {};
 let acceptingAnswers = false;
 let score = 0;
 let questionCounter = 0;
-let availableQuesions = [];
+let availableQuestions = [];
 
 let questions = [];
 
 fetch(
-   // 'https://opentdb.com/api.php?amount=10&category=${categoryId}&difficulty=easy&type=multiple')
     'https://opentdb.com/api.php?amount=10&category=15&difficulty=easy&type=multiple')
 
     .then((res) => {
         return res.json();
     })
-    .then((loadedQuestions) => {
-        questions = loadedQuestions.results.map((loadedQuestion) => {
+    .then((fetchedQuestions) => {
+        questions = fetchedQuestions.results.map((fetchedQuestion) => {
             const formattedQuestion = {
-                question: loadedQuestion.question,
+                question: fetchedQuestion.question,
             };
 
-            const answerChoices = [...loadedQuestion.incorrect_answers];
+            const answerChoices = [...fetchedQuestion.incorrect_answers];
             formattedQuestion.answer = Math.floor(Math.random() * 4) + 1;
-            answerChoices.splice(formattedQuestion.answer - 1,0,loadedQuestion.correct_answer);
+            answerChoices.splice(formattedQuestion.answer - 1,0,fetchedQuestion.correct_answer);
             answerChoices.forEach((choice, index) => {
                 formattedQuestion['choice' + (index + 1)] = choice;
             });
 
             return formattedQuestion;
         });
-        startGame();
+        startQuiz();
     })
     .catch((err) => {
         console.error(err);
     });
 
-//CONSTANTS
+//Constants 
 const CORRECT_BONUS = 1;
 const MAX_QUESTIONS = 10;
 
-startGame = () => {
+startQuiz = () => {
     questionCounter = 0;
     score = 0;
-    availableQuesions = [...questions];
+    availableQuestions = [...questions];
     getNewQuestion();
 };
 
 getNewQuestion = () => {
-    if (availableQuesions.length === 0 || questionCounter >= MAX_QUESTIONS) {
-        localStorage.setItem('mostRecentScore', score);
-        //go to the end page
+    if (availableQuestions.length === 0 || questionCounter >= MAX_QUESTIONS) {
+        localStorage.setItem('recentScore', score);
+        //Go to end page when out of questions
         return window.location.assign('/end.html');
     }
     questionCounter++;
@@ -64,8 +62,8 @@ getNewQuestion = () => {
     //Update the progress bar
     progressBarFull.style.width = `${(questionCounter / MAX_QUESTIONS) * 100}%`;
 
-    const questionIndex = Math.floor(Math.random() * availableQuesions.length);
-    currentQuestion = availableQuesions[questionIndex];
+    const questionIndex = Math.floor(Math.random() * availableQuestions.length);
+    currentQuestion = availableQuestions[questionIndex];
     question.innerText = currentQuestion.question;
 
     choices.forEach((choice) => {
@@ -73,7 +71,7 @@ getNewQuestion = () => {
         choice.innerText = currentQuestion['choice' + number];
     });
 
-    availableQuesions.splice(questionIndex, 1);
+    availableQuestions.splice(questionIndex, 1);
     acceptingAnswers = true;
 };
 
@@ -89,7 +87,7 @@ choices.forEach((choice) => {
             selectedAnswer == currentQuestion.answer ? 'correct' : 'incorrect';
 
         if (classToApply === 'correct') {
-            incrementScore(CORRECT_BONUS);
+            addScore(CORRECT_BONUS);
         }
 
         selectedChoice.parentElement.classList.add(classToApply);
@@ -101,11 +99,10 @@ choices.forEach((choice) => {
     });
 });
 
-incrementScore = (num) => {
+addScore = (num) => {
     score += num;
     scoreText.innerText = score;
 };
 
-const MAX_HIGH_SCORES = 5;
-finalScore.innerText = mostRecentScore;
+finalScore.innerText = recentScore;
 
