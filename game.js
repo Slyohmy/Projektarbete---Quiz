@@ -104,8 +104,24 @@ addScore = (num) => {
     scoreText.innerText = score;
 };
 
-message = "Your score is " + (((recentScore/MAX_QUESTIONS) * 100)+"%");
-finalScore.innerText = message;
+let checkScore = ((recentScore/MAX_QUESTIONS) * 100);
+
+
+if (checkScore < 50) {
+    finalScore.innerText = "Score: "+ checkScore + "% fail";
+    finalScore.style.color = '#dc3545';
+}
+
+else if (checkScore >= 50 && checkScore <= 75) {
+    finalScore.innerText = "Score: "+ checkScore + "% - well done";
+    finalScore.style.color = 'rgb(235, 187, 109)';
+}
+
+else if (checkScore > 75) {
+    finalScore.innerText = "Score: "+ checkScore + "% - PERFECT!";
+    finalScore.style.color = '#28a745';
+}
+
 
 
 
