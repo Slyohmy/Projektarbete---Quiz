@@ -54,9 +54,7 @@ label {
     align-items: center;
     max-width: 80rem;
     margin: 0 auto;
-    padding: 2rem;
-    background: url('./img/rubiks.jpg') no-repeat;
-    
+    padding: 2rem;    
 }
 
 .container > * {
@@ -100,16 +98,13 @@ label {
     background-color: rgb(223, 191, 189);
 }
 
-
-
-
 select:hover {
     cursor: pointer;
     box-shadow: 0 0.4rem 1.4rem 0 rgb(73, 178, 207);
 }
 
 select option{
-    color:rgb(72, 174, 196);
+    color:rgb(66, 65, 65);
 }
 
 .btn:hover {

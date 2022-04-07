@@ -104,5 +104,8 @@ addScore = (num) => {
     scoreText.innerText = score;
 };
 
-finalScore.innerText = recentScore;
+message = "Your score is " + (((recentScore/MAX_QUESTIONS) * 100)+"%");
+finalScore.innerText = message;
+
+
 
