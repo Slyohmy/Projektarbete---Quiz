@@ -4,17 +4,19 @@ const progressText = document.getElementById('progressText');
 const scoreText = document.getElementById('score');
 const progressBarFull = document.getElementById('progressBarFull');
 const recentScore = localStorage.getItem('recentScore');
+const url = localStorage.getItem("url");
+const chosenCategory = localStorage.getItem("chosenCategory");
+
 
 let currentQuestion = {};
 let acceptingAnswers = false;
 let score = 0;
 let questionCounter = 0;
 let availableQuestions = [];
-
+let buttonIsClicked = false;
 let questions = [];
 
-fetch(
-    'https://opentdb.com/api.php?amount=10&category=15&difficulty=easy&type=multiple')
+fetch(url)
 
     .then((res) => {
         return res.json();
@@ -24,7 +26,6 @@ fetch(
             const formattedQuestion = {
                 question: fetchedQuestion.question,
             };
-
             const answerChoices = [...fetchedQuestion.incorrect_answers];
             formattedQuestion.answer = Math.floor(Math.random() * 4) + 1;
             answerChoices.splice(formattedQuestion.answer - 1,0,fetchedQuestion.correct_answer);
@@ -64,7 +65,7 @@ getNewQuestion = () => {
 
     const questionIndex = Math.floor(Math.random() * availableQuestions.length);
     currentQuestion = availableQuestions[questionIndex];
-    question.innerText = currentQuestion.question;
+    question.innerHTML = currentQuestion.question;
 
     choices.forEach((choice) => {
         const number = choice.dataset['number'];
@@ -108,17 +109,17 @@ let checkScore = ((recentScore/MAX_QUESTIONS) * 100);
 
 
 if (checkScore < 50) {
-    finalScore.innerText = "Score: "+ checkScore + "% fail";
+    finalScore.innerText = checkScore + " Points - Fail!";
     finalScore.style.color = '#dc3545';
 }
 
 else if (checkScore >= 50 && checkScore <= 75) {
-    finalScore.innerText = "Score: "+ checkScore + "% - well done";
+    finalScore.innerText = checkScore + " Points - Good job";
     finalScore.style.color = 'rgb(235, 187, 109)';
 }
 
 else if (checkScore > 75) {
-    finalScore.innerText = "Score: "+ checkScore + "% - PERFECT!";
+    finalScore.innerText = checkScore + " Points - EXCELLENT!";
     finalScore.style.color = '#28a745';
 }
 
