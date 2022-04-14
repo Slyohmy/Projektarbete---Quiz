@@ -4,8 +4,7 @@ const progressText = document.getElementById('progressText');
 const scoreText = document.getElementById('score');
 const progressBarFull = document.getElementById('progressBarFull');
 const recentScore = localStorage.getItem('recentScore');
-const url = localStorage.getItem("url");
-const chosenCategory = localStorage.getItem("chosenCategory");
+const url = localStorage.getItem('url');
 
 
 let currentQuestion = {};
@@ -41,7 +40,7 @@ fetch(url)
         console.error(err);
     });
 
-//Constants 
+
 const CORRECT_BONUS = 1;
 const MAX_QUESTIONS = 10;
 
@@ -54,13 +53,11 @@ startQuiz = () => {
 
 getNewQuestion = () => {
     if (availableQuestions.length === 0 || questionCounter >= MAX_QUESTIONS) {
-        localStorage.setItem('recentScore', score);
-        //Go to end page when out of questions
+        localStorage.setItem('recentScore', score);        
         return window.location.assign('/end.html');
     }
     questionCounter++;
     progressText.innerText = `Question ${questionCounter}/${MAX_QUESTIONS}`;
-    //Update the progress bar
     progressBarFull.style.width = `${(questionCounter / MAX_QUESTIONS) * 100}%`;
 
     const questionIndex = Math.floor(Math.random() * availableQuestions.length);
@@ -109,12 +106,12 @@ let checkScore = ((recentScore/MAX_QUESTIONS) * 100);
 
 
 if (checkScore < 50) {
-    finalScore.innerText = checkScore + " Points - Fail!";
+    finalScore.innerText = checkScore + " Points - Failure!";
     finalScore.style.color = '#dc3545';
 }
 
 else if (checkScore >= 50 && checkScore <= 75) {
-    finalScore.innerText = checkScore + " Points - Good job";
+    finalScore.innerText = checkScore + " Points - Good Job";
     finalScore.style.color = 'rgb(235, 187, 109)';
 }
 
